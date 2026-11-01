@@ -1,26 +1,27 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-ink: #07070a;
+  --color-panel: #0e0e13;
+  --color-line: #1e1e28;
+  --color-mute: #8a8a9a;
+  --color-ok: #34d399;
+  --color-info: #60a5fa;
+  --color-warn: #fbbf24;
+  --color-orange: #f97316;
+  --color-danger: #f43f5e;
+  --color-accent: #2dd4bf;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html { color-scheme: dark; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: #ececf1;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
+.card { background: var(--color-panel); border: 1px solid var(--color-line); border-radius: 14px; }
+.label { font-family: var(--font-geist-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--color-mute); }
+@keyframes pulse-step { 0%,100% { opacity: .35 } 50% { opacity: 1 } }
+.running { animation: pulse-step 1s ease-in-out infinite; }
