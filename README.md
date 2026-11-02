@@ -4,8 +4,8 @@
 
 Built for the DOO Builders League challenge **"Simulate Before You Act"**.
 
-- **Live demo:** _add after deploy_
-- **90-second walkthrough:** _add Loom link_
+- **Live demo:** https://preflight-simulate.vercel.app (sandbox mode; live GitHub + Stripe test mode turns on when keys are set)
+- **90-second walkthrough (video):** https://github.com/Murtadha113/preflight-simulate-before-act/releases/download/v1.0/preflight-demo.mp4
 
 Preflight gates two high-stakes action types against **real APIs**:
 
