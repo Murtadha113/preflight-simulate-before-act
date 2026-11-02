@@ -27,8 +27,9 @@ async function main() {
   check(after.prs.every((x) => x.state === "open"), "v1: rollback reopened every PR");
   check(seedWorld().branches.every((b) => after.branches.some((a) => a.name === b.name && a.sha === b.sha)), "v1: rollback restored every branch at its original sha");
 
-  // 2. Same intent with the v2 model: the stacked PR is predicted up front
-  const sim2 = simulate(PRESETS[0].intent, await new SandboxProvider(seedWorld()).snapshot(), "sandbox", 2);
+  // 2. Same intent with the v2 model on the rolled-back repo: the stacked PR is predicted up front
+  check(after.branches.every((b) => seedWorld().branches.some((x) => x.name === b.name && x.lastCommitAt.slice(0, 10) === b.lastCommitAt.slice(0, 10))), "rollback: restored branches keep their original commit dates");
+  const sim2 = simulate(PRESETS[0].intent, await p.snapshot(), "sandbox", 2);
   check(sim2.items.some((i) => i.effects.some((e) => e.entity === "pr:#44")), "v2: simulation predicts PR #44 closure before execution");
   check(summarize(sim2, sim2.items.map((i) => i.id)).gate.status === "needs_review", "v2: gate asks for review because of danger side effects");
 

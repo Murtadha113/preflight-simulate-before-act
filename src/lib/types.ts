@@ -121,4 +121,6 @@ export interface World {
   charges: Charge[];
   balance: number;
   currency: string;
+  /** Commit metadata of deleted refs, so a ref recreated at the same sha keeps its real commit date (as on GitHub). */
+  graveyard?: Branch[];
 }

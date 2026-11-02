@@ -33,12 +33,14 @@ export class SandboxProvider implements Provider {
     if (!b) throw new Error(`Reference does not exist: heads/${name}`);
     if (b.protected) throw new Error(`Cannot delete protected branch ${name}`);
     this.world.branches = this.world.branches.filter((x) => x.name !== name);
+    (this.world.graveyard ??= []).push(b);
     // Same as GitHub: open PRs whose head OR base was this branch are closed.
     for (const p of this.world.prs) if (p.state === "open" && (p.head === name || p.base === name)) p.state = "closed";
   }
   async createRef(name: string, sha: string) {
     if (this.world.branches.some((b) => b.name === name)) throw new Error(`Reference already exists: ${name}`);
-    this.world.branches.push({ name, sha, protected: false, isDefault: false, lastCommitAt: new Date().toISOString(), aheadBy: 0 });
+    const known = this.world.graveyard?.find((g) => g.sha === sha);
+    this.world.branches.push(known ? { ...known, name, protected: false, isDefault: false } : { name, sha, protected: false, isDefault: false, lastCommitAt: new Date().toISOString(), aheadBy: 0 });
   }
   async reopenPR(n: number) {
     const p = this.world.prs.find((x) => x.number === n);
